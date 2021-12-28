@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Filter from "./Filter";
 import Product from "./Product";
 
 const Home = () => {
-  var Array = [];
+  const [array, setArray] = useState([]);
 
-  // eslint-disable-next-line
   useEffect(() => {
+    const temp = [];
     const getData = async () => {
       await axios
         .get("https://assessment-edvora.herokuapp.com")
@@ -28,9 +28,12 @@ const Home = () => {
       });
       for (let item of productNames) {
         const result = data.filter((ite) => ite.product_name === item);
-        Array.push(result);
+        temp.push(result);
       }
+      setArray(temp);
+      console.log(temp);
     };
+
     getData();
   }, []);
 
@@ -52,8 +55,10 @@ const Home = () => {
         >
           Products
         </div>
-        {Array.map((item, index) => (
-          <Product key={index} data={item} />
+        {array.map((data, index) => (
+          <div style={{ marginTop: "5vh" }} key={index}>
+            <Product data={data} />{" "}
+          </div>
         ))}
       </div>
     </div>

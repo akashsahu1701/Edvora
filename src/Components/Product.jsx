@@ -12,7 +12,7 @@ const Product = ({ data }) => {
         className="col-1 text-1"
         style={{ fontSize: "3vh", marginTop: "3vh", fontWeight: "500" }}
       >
-        Product Name
+        {data[0].product_name}
       </div>
       <hr
         className="col-1"
