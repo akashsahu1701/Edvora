@@ -2,17 +2,18 @@ import React from "react";
 import arrow from "../Assets/arrow.png";
 import ProductItem from "./ProductItem";
 
-const Product = ({ data }) => {
+const Product = ({ data, index }) => {
   const scroll = () => {
-    document.getElementById("container").scrollLeft += 40;
+    document.getElementById(`container${index}`).scrollLeft += 40;
   };
+  //  scrolling bugs need to be fixed
   return (
     <div>
       <div
         className="col-1 text-1"
         style={{ fontSize: "3vh", marginTop: "3vh", fontWeight: "500" }}
       >
-        {data[0].product_name}
+        {data.length !== 0 && data[0].product_name}
       </div>
       <hr
         className="col-1"
@@ -23,12 +24,13 @@ const Product = ({ data }) => {
         }}
       />
       <div className="flex">
-        <div id="container" className="product-box flex">
-          {data.map((item, index) => (
-            <div className="col-2" key={index}>
-              <ProductItem item={item} />
-            </div>
-          ))}
+        <div id={`container${index}`} className="product-box flex">
+          {data.length !== 0 &&
+            data.map((item, index) => (
+              <div className="col-2" key={index}>
+                <ProductItem item={item} />
+              </div>
+            ))}
         </div>
         <div className="arrow">
           <img onClick={() => scroll()} src={arrow} alt="next" />{" "}

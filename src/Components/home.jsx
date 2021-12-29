@@ -5,6 +5,9 @@ import Product from "./Product";
 
 const Home = () => {
   const [array, setArray] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
 
   useEffect(() => {
     const temp = [];
@@ -22,25 +25,68 @@ const Home = () => {
 
     const seperateData = (data) => {
       const productNames = new Set();
+      const stateNames = new Set();
+      const cityNames = new Set();
+
+      const temp1 = [];
+      const temp2 = [];
+      const temp3 = [];
+
       data.map((item) => {
         productNames.add(item.product_name);
+        stateNames.add(item.address.state);
+        cityNames.add(item.address.city);
         return null;
       });
+
       for (let item of productNames) {
         const result = data.filter((ite) => ite.product_name === item);
+        temp1.push(item);
         temp.push(result);
       }
+      for (let item of stateNames) {
+        temp2.push(item);
+      }
+      for (let item of cityNames) {
+        temp3.push(item);
+      }
+      setProductList(temp1);
+      setStateList(temp2);
+      setCityList(temp3);
       setArray(temp);
-      console.log(temp);
     };
 
     getData();
   }, []);
 
+  const filterData = (type, query) => {
+    var tempData;
+    if (type === 1) {
+      tempData = array.map((items) =>
+        items.filter((item) => item.product_name === query)
+      );
+    } else if (type === 2) {
+      tempData = array.map((items) =>
+        items.filter((item) => item.address.state === query)
+      );
+    } else {
+      tempData = array.map((items) =>
+        items.filter((item) => item.address.city === query)
+      );
+    }
+    console.log(tempData);
+    setArray(tempData);
+  };
+
   return (
     <div className="flex">
       <div className="box-1 p-sm">
-        <Filter />
+        <Filter
+          productList={productList}
+          stateList={stateList}
+          cityList={cityList}
+          filterData={filterData}
+        />
       </div>
       <div className="box-2 p-me ">
         <div
@@ -55,11 +101,13 @@ const Home = () => {
         >
           Products
         </div>
-        {array.map((data, index) => (
-          <div style={{ marginTop: "5vh" }} key={index}>
-            <Product data={data} />{" "}
-          </div>
-        ))}
+        {array.map((data, index) =>
+          data.length !== 0 ? (
+            <div style={{ marginTop: "5vh" }} key={index}>
+              <Product data={data} index={index} />{" "}
+            </div>
+          ) : null
+        )}
       </div>
     </div>
   );
