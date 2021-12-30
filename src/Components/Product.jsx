@@ -3,10 +3,14 @@ import arrow from "../Assets/arrow.png";
 import ProductItem from "./ProductItem";
 
 const Product = ({ data, index }) => {
-  const scroll = () => {
+  const scrollLeft = () => {
     document.getElementById(`container${index}`).scrollLeft += 40;
   };
-  //  scrolling bugs need to be fixed
+
+  const scrollRight = () => {
+    document.getElementById(`container${index}`).scrollLeft -= 40;
+  };
+
   return (
     <div>
       <div
@@ -24,6 +28,9 @@ const Product = ({ data, index }) => {
         }}
       />
       <div className="flex">
+        <div className="arrowLeft">
+          <img onClick={() => scrollRight()} src={arrow} alt="next" />{" "}
+        </div>
         <div id={`container${index}`} className="product-box flex">
           {data.length !== 0 &&
             data.map((item, index) => (
@@ -33,7 +40,7 @@ const Product = ({ data, index }) => {
             ))}
         </div>
         <div className="arrow">
-          <img onClick={() => scroll()} src={arrow} alt="next" />{" "}
+          <img onClick={() => scrollLeft()} src={arrow} alt="next" />{" "}
         </div>
       </div>
     </div>

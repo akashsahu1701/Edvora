@@ -60,7 +60,7 @@
   background: #131313;
   border-radius: 15px;
   height: 30vh;
-  width: 95%;
+  width: 90%;
   overflow-x: scroll;
 }
 .product-box::-webkit-scrollbar {
@@ -70,8 +70,16 @@
 .arrow {
   position: relative;
   cursor: pointer;
-  left: 3%;
-  top: 10vh;
+  left: 2%;
+  top: 11vh;
+}
+.arrowLeft {
+  position: relative;
+  transform: rotate(180deg);
+  cursor: pointer;
+  margin-right: 1vw;
+  left: -1%;
+  top: -13vh;
 }
 .item-box {
   margin: 2vh 1vw;

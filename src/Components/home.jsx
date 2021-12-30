@@ -5,6 +5,7 @@ import Product from "./Product";
 
 const Home = () => {
   const [array, setArray] = useState([]);
+  const [mainArray, setMainArray] = useState([]);
   const [productList, setProductList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
@@ -53,6 +54,7 @@ const Home = () => {
       setProductList(temp1);
       setStateList(temp2);
       setCityList(temp3);
+      setMainArray(temp);
       setArray(temp);
     };
 
@@ -61,16 +63,18 @@ const Home = () => {
 
   const filterData = (type, query) => {
     var tempData;
-    if (type === 1) {
-      tempData = array.map((items) =>
+    if (query === "") {
+      tempData = mainArray;
+    } else if (type === 1) {
+      tempData = mainArray.map((items) =>
         items.filter((item) => item.product_name === query)
       );
     } else if (type === 2) {
-      tempData = array.map((items) =>
+      tempData = mainArray.map((items) =>
         items.filter((item) => item.address.state === query)
       );
     } else {
-      tempData = array.map((items) =>
+      tempData = mainArray.map((items) =>
         items.filter((item) => item.address.city === query)
       );
     }
